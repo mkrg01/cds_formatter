@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import shutil
 import argparse
+import re
 
 # parse command line arguments
 parser = argparse.ArgumentParser(description='Prepare input files for NCBI formatter.')
@@ -24,10 +25,19 @@ with open(file_md5sum, 'r') as f:
         assert true_md5sum == calculated_md5sum, f"MD5 checksum mismatch: {filepath}"
 print('MD5 checksums verified successfully.')
 
+def format_species_name(species_name):
+    species_name = species_name.replace(' ', '_')
+    species_name = re.sub(r"[.\[\]'\(\)\"]", "", species_name)
+    species_name = species_name.replace('/', '_')
+    parts = species_name.split("_")
+    if len(parts) > 1:
+        species_name = parts[0] + "_" + "-".join(parts[1:])
+    return species_name
+
 print('Checking whether CDS, GFF, and genome files exist...')
 metadata_df = pd.read_csv(file_metadata, sep='\t')
 for idx, row in metadata_df.iterrows():
-    species = row['Organism Scientific Name'].replace(' ', '_')
+    species = format_species_name(row['Organism Scientific Name'])
     accession = row['Assembly Accession']
     assembly = row['Assembly Name'].replace(' ', '_')
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
@@ -41,7 +51,7 @@ print('All required files exist.')
 
 print('Moving CDS, GFF, and genome files...')
 for idx, row in metadata_df.iterrows():
-    species = row['Organism Scientific Name'].replace(' ', '_')
+    species = format_species_name(row['Organism Scientific Name'])
     accession = row['Assembly Accession']
     assembly = row['Assembly Name'].replace(' ', '_')
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
