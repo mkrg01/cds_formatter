@@ -27,9 +27,9 @@ print('MD5 checksums verified successfully.')
 print('Checking whether CDS, GFF, and genome files exist...')
 metadata_df = pd.read_csv(file_metadata, sep='\t')
 for idx, row in metadata_df.iterrows():
-    species = row['Organism Scientific Name']
+    species = row['Organism Scientific Name'].replace(' ', '_')
     accession = row['Assembly Accession']
-    assembly = row['Assembly Name']
+    assembly = row['Assembly Name'].replace(' ', '_')
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
     file_cds = dir_accession / "cds_from_genomic.fna"
     file_gff = dir_accession / "genomic.gff"
@@ -43,7 +43,7 @@ print('Moving CDS, GFF, and genome files...')
 for idx, row in metadata_df.iterrows():
     species = row['Organism Scientific Name'].replace(' ', '_')
     accession = row['Assembly Accession']
-    assembly = row['Assembly Name']
+    assembly = row['Assembly Name'].replace(' ', '_')
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
     file_cds = dir_accession / "cds_from_genomic.fna"
     file_gff = dir_accession / "genomic.gff"
