@@ -12,7 +12,7 @@
 3. Push "Download/Download Package"
 4. Select "Genome sequences (FASTA)", "Annotation features (GFF)", and "Genomic coding sequences (FASTA)"
 5. Push "Download"
-6. Unzip `ncbi_dataset.zip`, and place `ncbi_dataset` to `ncbi_formatter` directory
+6. Unzip `ncbi_dataset.zip`, and place `ncbi_dataset` to `cds_formatter` directory
 
 > [!NOTE]
 > It may be better to download GenBank and RefSeq assemblies separately, so that RefSeq can be prioritized when both are available.
@@ -20,7 +20,7 @@
 ### Run preformatter
 
 ```
-bash preformatting_ncbi.sh
+bash script/preformatting_ncbi.sh
 ```
 
 > [!NOTE]
@@ -32,5 +32,5 @@ bash preformatting_ncbi.sh
 > The code should be run on a Mac. The `sed` command on Linux does not work properly.
 
 ```
-bash formatting_ncbi.sh
+bash script/formatting_ncbi.sh
 ```

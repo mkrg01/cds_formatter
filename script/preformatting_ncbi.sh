@@ -3,5 +3,5 @@
 
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate pybase
-python preformatting_ncbi.py --input_dir ncbi_dataset --output_dir ncbi_downloaded
+python script/preformatting_ncbi.py --input_dir ncbi_dataset --output_dir ncbi_downloaded
 conda deactivate
