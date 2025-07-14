@@ -2,5 +2,5 @@
 /ncbi_downloaded*/
 /ncbi_formatted_cds/
 /ncbi_formatted_gff/
-/*.err
-/*.out
+*.err
+*.out
