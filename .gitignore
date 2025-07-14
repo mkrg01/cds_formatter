@@ -1,4 +1,6 @@
-/ncbi_dataset*
-/ncbi_downloaded/
+/ncbi_dataset*/
+/ncbi_downloaded*/
 /ncbi_formatted_cds/
 /ncbi_formatted_gff/
+/*.err
+/*.out
