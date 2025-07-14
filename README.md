@@ -7,7 +7,7 @@ CDS file formatting for gfe_pipeline. The formatting includes extracting the lon
 
 ## NCBI formatter
 
-### Download from NCBI
+### 1. Download from NCBI
 
 1. Search annotated genomes via the NCBI datasets genome page (e.g., https://www.ncbi.nlm.nih.gov/datasets/genome/?taxon=261007&annotated_only=true&refseq_annotation=true&genbank_annotation=true)
 2. Select assemblies
@@ -19,7 +19,7 @@ CDS file formatting for gfe_pipeline. The formatting includes extracting the lon
 > [!NOTE]
 > It may be better to download GenBank and RefSeq assemblies separately, so that RefSeq can be prioritized when both are available.
 
-### Run preformatter
+### 2. Run preformatter
 
 ```
 bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/preformatting_ncbi.sh.err
@@ -28,7 +28,7 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 > [!NOTE]
 > Please check that the species names are formatted correctly.
 
-### Run formatter
+### 3. Run formatter
 
 ```
 bash script/formatting_ncbi.sh > script/formatting_ncbi.sh.out 2> script/formatting_ncbi.sh.err
