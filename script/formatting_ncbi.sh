@@ -3,6 +3,7 @@
 # CDS, gff, and genome data formatting
 # Run preformatting_ncbi.sh beforehand
 # Formatting should be performed on Mac (BSD sed, not GNU sed)
+# The locus_tag in the CDS FASTA headers will be used to select the longest isoform for each gene
 
 # Input example: 
 # Input gff: "ncbi_downloaded/Amaranthus_tricolor_GCF_026212465.1/genomic.gff"

@@ -1,7 +1,9 @@
 # cds_formatter
+CDS file formatting for gfe_pipeline. The formatting includes extracting the longest isoform for each gene.
 
 > [!WARNING]
 > This is currently intended for private use. 'pybase' and 'seqkit' conda environments on my MacBook were used.
+> The code should be run on a Mac. The `sed` command on Linux does not work properly.
 
 ## NCBI formatter
 
@@ -28,9 +30,27 @@ bash script/preformatting_ncbi.sh
 
 ### Run formatter
 
-> [!WARNING]
-> The code should be run on a Mac. The `sed` command on Linux does not work properly.
-
 ```
 bash script/formatting_ncbi.sh
+```
+
+
+
+## PhycoCosm formatter
+
+### Download from PhycoCosm
+
+1. Visit [PhycoCosm website](https://phycocosm.jgi.doe.gov/phycocosm/home)
+2. Select target lineages
+3. Push "Download"
+4. Select "Annotation/Filtered Models/CDS", "Annotation/Genes", and "Assembly/Genome Assembly"
+5. Push "Download Selected Files"
+6. Unzip the downloaded file, and place the target assembly directories to `cds_formatter/PhycoCosm/species_wise_original` directory
+
+### Rename directory name
+
+### Run formatter
+
+```
+bash script/formatting_phycocosm.sh
 ```
