@@ -76,6 +76,9 @@ for input_name in ${input_names[@]}; do
 		if [[ -e ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
 			echo `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
 		fi
+		if [[ -e ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz ]]; then
+			gzcat ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz | grep -v "^#" | awk -F '\t' '$3 == "gene" || $3 == "CDS"' | head -n 5
+		fi
 		echo ""
 	fi
 done
