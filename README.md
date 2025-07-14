@@ -22,11 +22,12 @@ CDS file formatting for gfe_pipeline. The formatting includes extracting the lon
 ### Run preformatter
 
 ```
-bash script/preformatting_ncbi.sh
+bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/preformatting_ncbi.sh.err
 ```
 
 > [!NOTE]
 > Please check that the species names are formatted correctly.
+> Please check `script/preformatting_ncbi.sh.out` to ensure that the locus_tag is included in the header of the CDS file, which is necessary to extract only one CDS per gene.
 
 ### Run formatter
 
