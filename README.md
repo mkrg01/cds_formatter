@@ -26,8 +26,8 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 ```
 
 > [!NOTE]
-> Please check that the species names are formatted correctly.
-> Please check `script/preformatting_ncbi.sh.out` to ensure that the locus_tag is included in the header of the CDS file, which is necessary to extract only one CDS per gene.
+> - Please check that the species names are formatted correctly.
+> - Please check `script/preformatting_ncbi.sh.out` to ensure that the locus_tag is included in the header of the CDS file, which is necessary to extract only one CDS per gene.
 
 ### Run formatter
 
