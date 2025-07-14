@@ -1,7 +1,9 @@
-# ncbi_formatter
+# cds_formatter
 
 > [!WARNING]
 > This is currently intended for private use. 'pybase' and 'seqkit' conda environments on my MacBook were used.
+
+## NCBI formatter
 
 ### Download from NCBI
 
