@@ -8,7 +8,7 @@ dir_base="phycocosm"
 dir_original="${dir_base}/species_wise_original"
 dir_formatted="${dir_base}/species_wise_formatted"
 common_sed_exp='-e "s/evm_27.model.//g" -e "s/evm.model.//g" -e "s/Oropetium_20150105_//g"'
-phycocosm_sed_exp='-e "s/jgi|//" -e "s/|/_/g"'
+phycocosm_sed_exp='-e "s/jgi|//" -e "s/|/_/g" -e "s/+/_/g" -e "s/:/_/g" -e "s/%/_/g" -e "s/\#/_/g" -e "s/\//_/g" -e "s/\[/_/g" -e "s/\]/_/g" -e "s/(/_/g" -e "s/)/_/g"'
 
 dir_spp=( `ls ${dir_original}` )
 for dir_sp in ${dir_spp[@]}; do
