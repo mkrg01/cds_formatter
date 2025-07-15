@@ -46,12 +46,14 @@ bash script/formatting_ncbi.sh > script/formatting_ncbi.sh.out 2> script/formatt
 3. Push "Download"
 4. Select "Annotation/Filtered Models/CDS", "Annotation/Genes", and "Assembly/Genome Assembly"
 5. Push "Download Selected Files"
-6. Unzip the downloaded file, and place the target assembly directories to `cds_formatter/PhycoCosm/species_wise_original` directory
+6. Unzip the downloaded file, and place the target assembly directories to `cds_formatter/phycocosm/species_wise_original` directory
 
 ### Rename directory name
+
+Manually insert scientific names at the beginning of directory names.
 
 ### Run formatter
 
 ```
-bash script/formatting_phycocosm.sh
+bash script/formatting_phycocosm.sh > script/formatting_phycocosm.sh.out 2> script/formatting_phycocosm.sh.err
 ```

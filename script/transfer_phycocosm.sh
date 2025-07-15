@@ -1,4 +1,4 @@
-dir_base="/Volumes/kfT7/Dropbox/repos/gfe_dataset/20221122_PhycoCosm"
+dir_base="phycocosm"
 dir_formatted="${dir_base}/species_wise_formatted"
 dir_species_cds="${dir_base}/species_cds"
 dir_species_gff="${dir_base}/species_gff"
@@ -27,8 +27,3 @@ for dir_sp in ${dir_spp[@]}; do
 		fi
 	done
 done
-
-: <<'#_______________CO_______________'
-
-
-#_______________CO_______________
