@@ -4,3 +4,4 @@
 /ncbi_formatted_gff/
 *.err
 *.out
+.DS_Store
