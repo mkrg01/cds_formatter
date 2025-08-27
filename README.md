@@ -49,6 +49,9 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 bash script/formatting_ncbi.sh > script/formatting_ncbi.sh.out 2> script/formatting_ncbi.sh.err
 ```
 > [!NOTE]
+> The `script/formatting_ncbi.sh` can be run in batch with multiple outputs from the `script/preformatting_ncbi.sh` (the only required input is the `ncbi_downloaded` directory).
+
+> [!NOTE]
 > Please check `script/formatting_ncbi.sh.out` to ensure that the `locus_tag` is included in the header of the CDS file, which is necessary to extract only one CDS per gene.
 
 
