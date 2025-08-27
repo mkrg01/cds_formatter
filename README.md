@@ -29,7 +29,7 @@ mamba activate cds_formatter
 3. Push "Download/Download Package"
 4. Select "Genome sequences (FASTA)", "Annotation features (GFF)", and "Genomic coding sequences (FASTA)"
 5. Push "Download"
-6. Unzip `ncbi_dataset.zip`, and place `ncbi_dataset` to `cds_formatter` directory
+6. Unzip `ncbi_dataset.zip`, and place the unzipped directory to `cds_formatter` directory
 
 > [!NOTE]
 > It may be better to download GenBank and RefSeq assemblies separately, so that RefSeq can be prioritized when both are available.
