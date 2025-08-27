@@ -1,3 +1,5 @@
+#!/bin/bash
+
 dir_base="phycocosm"
 dir_formatted="${dir_base}/species_wise_formatted"
 dir_species_cds="${dir_base}/species_cds"

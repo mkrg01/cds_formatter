@@ -1,0 +1,8 @@
+name: cds_formatter
+channels:
+  - conda-forge
+dependencies:
+  - bioconda::cdskit=0.14.4
+  - bioconda::seqkit=2.10.0
+  - conda-forge::pandas=2.3.2
+  - conda-forge::pigz=2.8

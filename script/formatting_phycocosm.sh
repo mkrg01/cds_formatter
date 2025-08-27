@@ -1,5 +1,4 @@
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate seqkit
+#!/bin/bash
 
 format_cds=1
 format_gff=1
@@ -58,5 +57,3 @@ for dir_sp in ${dir_spp[@]}; do
 	fi
 	echo ""
 done
-
-conda deactivate

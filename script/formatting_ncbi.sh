@@ -10,11 +10,6 @@
 # Input cds: "ncbi_downloaded/Amaranthus_tricolor_GCF_026212465.1/cds_from_genomic.fna"
 # Input genome: "ncbi_downloaded/Amaranthus_tricolor_GCF_026212465.1/GCF_008831285.2_ASM883128v2_genomic.fna"
 
-# conda create -n seqkit nomkl bioconda::seqkit cdskit pigz
-
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate seqkit
-
 NSLOTS=4
 dir_downloaded="./ncbi_downloaded"
 dir_formatted_cds="./ncbi_formatted_cds"

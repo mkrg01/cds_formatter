@@ -1,9 +1,24 @@
 # cds_formatter
+[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
+
 CDS file formatting for gfe_pipeline. The formatting includes extracting the longest isoform for each gene.
 
 > [!WARNING]
-> This is currently intended for private use. 'pybase' and 'seqkit' conda environments on my MacBook were used.
 > The code should be run on a Mac. The `sed` command on Linux does not work properly.
+
+## Installation
+### 1. Clone this repository
+```
+git clone https://github.com/mkrg01/cds_formatter
+cd cds_formatter
+```
+
+### 2.  Create and activate environment
+```
+mamba env create -f environment.yml
+mamba activate cds_formatter
+```
+
 
 ## NCBI formatter
 
