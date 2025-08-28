@@ -60,7 +60,7 @@ for input_name in ${input_names[@]}; do
 				echo Formatting CDS file: ${file}
 				echo Original CDS header: ${first_header}
 				if [[ "$first_header" != *"[gene="* && "$first_header" != *"[locus_tag="* ]]; then
-					echo "Error: header does not contain '[gene=' or '[locus_tag=': $file" >&2
+					echo "Error: header does not contain '[gene=' or '[locus_tag=': $file" | tee >(cat >&2)
 					exit 1
 				fi
 				seqkit seq --threads ${NSLOTS} ${dir_sp}/${file} \

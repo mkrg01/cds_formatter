@@ -66,7 +66,7 @@ for input_name in ${input_names[@]}; do
                 first_header=$(cat tmp.cds.fa | head -n1)
 				echo Gffread CDS full header: ${first_header}
 				if [[ "$first_header" != *"gene="* && "$first_header" != *"locus_tag="* ]]; then
-					echo "Error: header does not contain 'gene=' or 'locus_tag=': $file" >&2
+					echo "Error: header does not contain 'gene=' or 'locus_tag=': $file" | tee >(cat >&2)
                     rm ${dir_sp}/${sci_name_ub}_genomic.gff
                     rm ${dir_sp}/`basename ${file} .gz`
                     rm tmp.cds.fa
