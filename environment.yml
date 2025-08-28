@@ -4,5 +4,6 @@ channels:
 dependencies:
   - bioconda::cdskit=0.14.4
   - bioconda::seqkit=2.10.0
+  - bioconda::gffread=0.12.7
   - conda-forge::pandas=2.3.2
   - conda-forge::pigz=2.8
