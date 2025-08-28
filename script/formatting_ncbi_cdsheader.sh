@@ -56,7 +56,7 @@ for input_name in ${input_names[@]}; do
 		files=( `ls ${dir_sp}` )
 		for file in ${files[@]}; do
 			if [[ ( ${file} == *cds_from_genomic.fna* || ${file} == *${accession}.fna* ) && ! -s ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
-				first_header=$(zcat ${dir_sp}/${file} | head -n1)
+				first_header=$(gzcat ${dir_sp}/${file} | head -n1)
 				echo Formatting CDS file: ${file}
 				echo Original CDS header: ${first_header}
 				if [[ "$first_header" != *"[gene="* && "$first_header" != *"[locus_tag="* ]]; then
