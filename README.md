@@ -56,10 +56,10 @@ bash script/formatting_ncbi_gffread.sh > script/formatting_ncbi_gffread.sh.out 2
 ```
 
 > [!NOTE]
-> The `script/formatting_ncbi_gffread.sh` can be run in batch with multiple outputs from the `script/preformatting_ncbi.sh` (the only required input is the `ncbi_downloaded` directory).
+> The `script/formatting_ncbi_cdsheader.sh` and `script/formatting_ncbi_gffread.sh` can be run in batch with multiple outputs from the `script/preformatting_ncbi.sh` (the only required input is the `ncbi_downloaded` directory).
 
 > [!NOTE]
-> Please check `script/formatting_ncbi_gffread.sh.out` to ensure that the headers are formatted correctly. At present, either `gene` or `locus_tag` is required for extracting the longest isoforms.
+> Please check `script/formatting_ncbi_cdsheader.sh` or `script/formatting_ncbi_gffread.sh.out` to ensure that the headers are formatted correctly. At present, either `gene` or `locus_tag` is required for extracting the longest isoforms.
 
 
 ## PhycoCosm formatter
