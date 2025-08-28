@@ -3,7 +3,7 @@
 # CDS, gff, and genome data formatting
 # Run preformatting_ncbi.sh beforehand
 # Formatting should be performed on Mac (BSD sed, not GNU sed)
-# The locus_tag in the CDS FASTA headers will be used to select the longest isoform for each gene
+# The locus_tag or gene in the CDS FASTA headers will be used to select the longest isoform for each gene
 
 # Input example: 
 # Input gff: "ncbi_downloaded/Amaranthus_tricolor_GCF_026212465.1/genomic.gff"
@@ -56,22 +56,25 @@ for input_name in ${input_names[@]}; do
 		files=( `ls ${dir_sp}` )
 		for file in ${files[@]}; do
 			if [[ ( ${file} == *cds_from_genomic.fna* || ${file} == *${accession}.fna* ) && ! -s ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
+				first_header=$(zcat ${dir_sp}/${file} | head -n1)
 				echo Formatting CDS file: ${file}
+				echo Original CDS header: ${first_header}
+				if [[ "$first_header" != *"[gene="* && "$first_header" != *"[locus_tag="* ]]; then
+					echo "Error: header does not contain '[gene=' or '[locus_tag=': $file" >&2
+					exit 1
+				fi
 				seqkit seq --threads ${NSLOTS} ${dir_sp}/${file} \
 				| sed -e "s/^>.*\[gene=/>/" -e "s/^>.*\[locus_tag=/>/" -e "s/\].*//" -e "s/lcl\|//" -e "s/[[:space:]].*//" -e "s/|.*//" -e "s/\.t[0-9]+$//" -e "s|/|_|g" -e "s/+/_/g" -e "s/:/_/g" -e "s/\|/_/g" -e "s/%/_/g" -e "s/^>/>${sci_name_ub}_/" \
 				| cdskit aggregate --expression ":.*" \
 				| cdskit pad \
 				| seqkit seq --threads ${NSLOTS} --out-file ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz
+				echo Formatted CDS header: `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
 			fi
 			if [[ ${file} == *.gff.gz && ! -s ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz ]]; then
 				echo Copying: ${file}
 				cp ${dir_sp}/${file} ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz
 			fi
 		done
-		if [[ -e ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
-			echo Original CDS header: `seqkit seq --threads ${NSLOTS} ${dir_sp}/${sci_name_ub}_cds_from_genomic.fna.gz | head -n 1`
-			echo Formatted CDS header: `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
-		fi
 		if [[ -e ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz ]]; then
 			echo "First 5 lines of gene and CDS features in the formatted GFF:"
 			gzcat ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz | grep -v "^#" | awk -F '\t' '$3 == "gene" || $3 == "CDS"' | head -n 5
@@ -79,3 +82,4 @@ for input_name in ${input_names[@]}; do
 		echo ""
 	fi
 done
+echo "Done!"
