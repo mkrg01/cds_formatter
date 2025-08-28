@@ -50,7 +50,7 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 bash script/formatting_ncbi_cdsheader.sh > script/formatting_ncbi_cdsheader.sh.out 2> script/formatting_ncbi_cdsheader.sh.err
 ```
 
-#### Option 2: Generating CDS from genome and gff files using [gffread](https://github.com/gpertea/gffread)
+#### Option 2: Generating CDS from genome and gff files using [`gffread`](https://github.com/gpertea/gffread)
 ```
 bash script/formatting_ncbi_gffread.sh > script/formatting_ncbi_gffread.sh.out 2> script/formatting_ncbi_gffread.sh.err
 ```
