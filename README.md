@@ -45,12 +45,12 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 
 ### 3. Run formatter
 
-#### Option 1: Using origianl CDS
+#### Option 1: Using original CDS
 ```
 bash script/formatting_ncbi_cdsheader.sh > script/formatting_ncbi_cdsheader.sh.out 2> script/formatting_ncbi_cdsheader.sh.err
 ```
 
-#### Option 2: Generating CDS from genome and gff files using `gffread`
+#### Option 2: Generating CDS from genome and gff files using [gffread](https://github.com/gpertea/gffread)
 ```
 bash script/formatting_ncbi_gffread.sh > script/formatting_ncbi_gffread.sh.out 2> script/formatting_ncbi_gffread.sh.err
 ```
