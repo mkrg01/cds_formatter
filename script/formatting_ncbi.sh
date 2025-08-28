@@ -69,9 +69,11 @@ for input_name in ${input_names[@]}; do
 			fi
 		done
 		if [[ -e ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
-			echo `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
+			echo Original CDS header: `seqkit seq --threads ${NSLOTS} ${dir_sp}/${sci_name_ub}_cds_from_genomic.fna.gz | head -n 1`
+			echo Formatted CDS header: `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
 		fi
 		if [[ -e ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz ]]; then
+			echo "First 5 lines of gene and CDS features in the formatted GFF:"
 			gzcat ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz | grep -v "^#" | awk -F '\t' '$3 == "gene" || $3 == "CDS"' | head -n 5
 		fi
 		echo ""
