@@ -63,6 +63,9 @@ for input_name in ${input_names[@]}; do
                 gunzip -c ${dir_sp}/${sci_name_ub}_genomic.gff.gz > ${dir_sp}/${sci_name_ub}_genomic.gff
                 gunzip -c ${dir_sp}/${file} > ${dir_sp}/`basename ${file} .gz`
                 gffread -F -C -g ${dir_sp}/`basename ${file} .gz` -x tmp.cds.fa ${dir_sp}/${sci_name_ub}_genomic.gff
+                if [[ -e ${dir_sp}/`basename ${file} .gz`.fai ]]; then
+                    rm ${dir_sp}/`basename ${file} .gz`.fai
+                fi
                 first_header=$(cat tmp.cds.fa | head -n1)
 				echo Gffread CDS full header: ${first_header}
 				if [[ "$first_header" != *"gene="* && "$first_header" != *"locus_tag="* ]]; then
