@@ -62,6 +62,26 @@ bash script/formatting_ncbi_gffread.sh > script/formatting_ncbi_gffread.sh.out 2
 > Please check `script/formatting_ncbi_cdsheader.sh` or `script/formatting_ncbi_gffread.sh.out` to ensure that the headers are formatted correctly. At present, either `gene` or `locus_tag` is required for extracting the longest isoforms.
 
 
+## EnsemblPlants formatter
+
+### Download from EnsemblPlants (for one species)
+
+1. [Search species](https://plants.ensembl.org/species.html)
+2. Click species names
+3. Click FASTA (Download genes, cDNAs, ncRNA, proteins - FASTA)
+4. Click cds
+5. Download `*.cds.all.fa.gz`
+6. Click GFF3 (Download genes, cDNAs, ncRNA, proteins - GFF3)
+7. Download `*.gff3.gz`
+6. Place `*.cds.all.fa.gz` and `*.gff3.gz` to `EnsemblPlants/original_files/`
+
+### Run formatter
+
+```
+bash script/formatting_ensemblplants_cdsheader.sh > script/formatting_ensemblplants_cdsheader.sh.out 2> script/formatting_ensemblplants_cdsheader.sh.err
+```
+
+
 ## PhycoCosm formatter
 
 ### Download from PhycoCosm
