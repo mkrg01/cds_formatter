@@ -26,9 +26,9 @@ for input_name in ${input_names[@]}; do
 	accession=`echo ${input_name} | awk -F'_' '{for (i=3; i<=NF; i++) printf $i (i<NF?FS:RS)}' | sed -e "s/.fna//"`
 	sci_name_ub=`echo ${input_name} | cut -d'_' -f1-2`
 	if [[ ${accession} == '' ]]; then
-		echo "Skipping. Empty accesion for ${sci_name_ub}"
+		echo "Skipping. Empty accession for ${sci_name_ub}"
 	else
-		echo "Accesion: ${accession}, Scientifc name: ${sci_name_ub}"
+		echo "Accession: ${accession}, Scientific name: ${sci_name_ub}"
 		dir_sp="${dir_downloaded}/${sci_name_ub}_${accession}"
 		if [[ -f ${dir_downloaded}/${input_name} ]]; then
 			mkdir ${dir_sp}
@@ -60,8 +60,7 @@ for input_name in ${input_names[@]}; do
 				echo Formatting CDS file: ${file}
 				echo Original CDS header: ${first_header}
 				if [[ "$first_header" != *"[gene="* && "$first_header" != *"[locus_tag="* ]]; then
-					echo "Error: header does not contain '[gene=' or '[locus_tag=': $file" | tee >(cat >&2)
-					exit 1
+					echo "Warning: header does not contain '[gene=' or '[locus_tag=': $file" | tee >(cat >&2)
 				fi
 				seqkit seq --threads ${NSLOTS} ${dir_sp}/${file} \
 				| sed -e "s/^>.*\[gene=/>/" -e "s/^>.*\[locus_tag=/>/" -e "s/\].*//" -e "s/lcl\|//" -e "s/[[:space:]].*//" -e "s/|.*//" -e "s/\.t[0-9]+$//" -e "s|/|_|g" -e "s/+/_/g" -e "s/:/_/g" -e "s/\|/_/g" -e "s/%/_/g" -e "s/^>/>${sci_name_ub}_/" \

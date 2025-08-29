@@ -29,9 +29,9 @@ for input_name in ${input_names[@]}; do
 	accession=`echo ${input_name} | awk -F'_' '{for (i=3; i<=NF; i++) printf $i (i<NF?FS:RS)}' | sed -e "s/.fna//"`
 	sci_name_ub=`echo ${input_name} | cut -d'_' -f1-2`
 	if [[ ${accession} == '' ]]; then
-		echo "Skipping. Empty accesion for ${sci_name_ub}"
+		echo "Skipping. Empty accession for ${sci_name_ub}"
 	else
-		echo "Accesion: ${accession}, Scientifc name: ${sci_name_ub}"
+		echo "Accession: ${accession}, Scientific name: ${sci_name_ub}"
 		dir_sp="${dir_downloaded}/${sci_name_ub}_${accession}"
 		if [[ -f ${dir_downloaded}/${input_name} ]]; then
 			mkdir ${dir_sp}
@@ -60,30 +60,26 @@ for input_name in ${input_names[@]}; do
 		for file in ${files[@]}; do
 			if [[ ( ${file} == *${accession}*_genomic.fna.gz ) && ! -s ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz ]]; then
 				echo Formatting CDS file...
-                gunzip -c ${dir_sp}/${sci_name_ub}_genomic.gff.gz > ${dir_sp}/${sci_name_ub}_genomic.gff
-                gunzip -c ${dir_sp}/${file} > ${dir_sp}/`basename ${file} .gz`
-                gffread -F -C -g ${dir_sp}/`basename ${file} .gz` -x tmp.cds.fa ${dir_sp}/${sci_name_ub}_genomic.gff
-                if [[ -e ${dir_sp}/`basename ${file} .gz`.fai ]]; then
-                    rm ${dir_sp}/`basename ${file} .gz`.fai
+                gunzip -c ${dir_sp}/${sci_name_ub}_genomic.gff.gz > ${dir_sp}/tmp.gff
+                gunzip -c ${dir_sp}/${file} > ${dir_sp}/tmp.genome.fa
+                gffread -F -C -g ${dir_sp}/tmp.genome.fa -x ${dir_sp}/tmp.cds.fa ${dir_sp}/tmp.gff
+                if [[ -e ${dir_sp}/tmp.genome.fa.fai ]]; then
+                    rm ${dir_sp}/tmp.genome.fa.fai
                 fi
-                first_header=$(cat tmp.cds.fa | head -n1)
+                first_header=$(cat ${dir_sp}/tmp.cds.fa | head -n1)
 				echo Gffread CDS full header: ${first_header}
 				if [[ "$first_header" != *"gene="* && "$first_header" != *"locus_tag="* ]]; then
-					echo "Error: header does not contain 'gene=' or 'locus_tag=': $file" | tee >(cat >&2)
-                    rm ${dir_sp}/${sci_name_ub}_genomic.gff
-                    rm ${dir_sp}/`basename ${file} .gz`
-                    rm tmp.cds.fa
-					exit 1
+					echo "Warning: header does not contain 'gene=' or 'locus_tag=': $file" | tee >(cat >&2)
 				fi
-                seqkit seq --threads ${NSLOTS} tmp.cds.fa \
+                seqkit seq --threads ${NSLOTS} ${dir_sp}/tmp.cds.fa \
                 | sed $custom_sed_command -e "s/^>/>${sci_name_ub}_/" \
 				| cdskit aggregate --expression ":.*" \
 				| cdskit pad \
 				| seqkit seq --threads ${NSLOTS} --out-file ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz
                 echo Formatted CDS header: `seqkit seq --threads ${NSLOTS} ${dir_formatted_cds}/${sci_name_ub}_${accession}.fa.gz | head -n 1`
-                rm tmp.cds.fa
-                rm ${dir_sp}/${sci_name_ub}_genomic.gff
-                rm ${dir_sp}/`basename ${file} .gz`
+                rm ${dir_sp}/tmp.cds.fa
+                rm ${dir_sp}/tmp.gff
+                rm ${dir_sp}/tmp.genome.fa
 			fi
 			if [[ ${file} == *.gff.gz && ! -s ${dir_formatted_gff}/${sci_name_ub}_${accession}.gff.gz ]]; then
 				echo Copying: ${file}
