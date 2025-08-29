@@ -104,7 +104,7 @@ bash script/formatting_phycocosm.sh > script/formatting_phycocosm.sh.out 2> scri
 ```
 
 
-## Formatter for the other sources (from genome and gff)
+## Formatter for the other sources (from genome and gff files)
 
 ### Prepare genome and gff files
 
