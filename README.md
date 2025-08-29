@@ -102,3 +102,22 @@ Manually insert scientific names at the beginning of directory names.
 ```
 bash script/formatting_phycocosm.sh > script/formatting_phycocosm.sh.out 2> script/formatting_phycocosm.sh.err
 ```
+
+
+## Formatter for the other sources
+
+#### gffread
+
+### Prepare genome and gff files
+
+1. Create a directory named `{species}_{identifier}` in `other_downloaded/`
+2. Put gff and genome files in `other_downloaded/{species}_{identifier}/`
+
+### Run formatter
+
+```
+bash script/formatting_other_gffread.sh > script/formatting_other_gffread.sh.out 2> script/formatting_other_gffread.sh.err
+```
+
+> [!WARNING]
+> Please check `script/formatting_other_gffread.sh.out` to ensure that the headers are formatted correctly. You should custom sed command in `script/formatting_other_gffread.sh` to get unique gene identifiers.
