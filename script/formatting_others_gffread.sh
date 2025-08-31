@@ -51,7 +51,7 @@ for input_name in ${input_names[@]}; do
 		done
 
         gff_file=$(find "${dir_sp}" -maxdepth 1 -name "*.gff*" | head -n1)
-        genome_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" ! -name "*cds*" | head -n1)
+        genome_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" ! -iname "*cds*" | head -n1)
 
         dir_sp_out="${dir_formatted}/${sci_name_ub}_${accession}"
         if [[ ! -e ${dir_sp_out} ]]; then
