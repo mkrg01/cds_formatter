@@ -34,7 +34,7 @@ mamba activate cds_formatter
 > [!NOTE]
 > It may be better to download GenBank and RefSeq assemblies separately, so that RefSeq can be prioritized when both are available.
 
-### 2. Run preformatter
+### 2. Run the preformatter
 
 ```
 bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/preformatting_ncbi.sh.err
@@ -43,7 +43,7 @@ bash script/preformatting_ncbi.sh > script/preformatting_ncbi.sh.out 2> script/p
 > [!NOTE]
 > Please check that the species names are formatted correctly.
 
-### 3. Run formatter
+### 3. Run the formatter
 
 #### Option 1: Using original CDS
 ```
@@ -75,7 +75,7 @@ bash script/formatting_ncbi_gffread.sh > script/formatting_ncbi_gffread.sh.out 2
 7. Download `*.gff3.gz`
 6. Place `*.cds.all.fa.gz` and `*.gff3.gz` to `EnsemblPlants/original_files/`
 
-### Run formatter
+### Run the formatter
 
 ```
 bash script/formatting_ensemblplants_cdsheader.sh > script/formatting_ensemblplants_cdsheader.sh.out 2> script/formatting_ensemblplants_cdsheader.sh.err
@@ -97,25 +97,41 @@ bash script/formatting_ensemblplants_cdsheader.sh > script/formatting_ensemblpla
 
 Manually insert scientific names at the beginning of directory names.
 
-### Run formatter
+### Run the formatter
 
 ```
 bash script/formatting_phycocosm.sh > script/formatting_phycocosm.sh.out 2> script/formatting_phycocosm.sh.err
 ```
 
 
-## Formatter for the other sources (from genome and gff files)
+## Formatter for the other sources
 
-### Prepare genome and gff files
+### 1. Using genome + GFF files
 
-1. Create a directory named `{species}_{identifier}` in `other_downloaded/`
-2. Put gff and genome files in `other_downloaded/{species}_{identifier}/`
+### 1-1. Prepare inputs
 
-### Run formatter
+1. Create a directory named `{species}_{identifier}` under `other_downloaded/`
+2. Place the genome and GFF files in `other_downloaded/{species}_{identifier}/`
+
+### 1-2. Run the formatter
 
 ```
 bash script/formatting_other_gffread.sh > script/formatting_other_gffread.sh.out 2> script/formatting_other_gffread.sh.err
 ```
 
+### 2. Using CDS file (optional; run after Step 1)
+
+### 2-1. Prepare CDS files
+
+1. Put the CDS file in `other_downloaded/{species}_{identifier}/`
+2. Remove the CDS file in `other_formatted/{species}_{identifier}/`
+
+### 2-2. Run the formatter
+
+```
+bash script/formatting_other_cdsheader.sh > script/formatting_other_cdsheader.sh.out 2> script/formatting_other_cdsheader.sh.err
+```
+
 > [!WARNING]
-> Please check `script/formatting_other_gffread.sh.out` to ensure that the headers are formatted correctly. You should custom sed command in `script/formatting_other_gffread.sh` to get unique gene identifiers.
+> Please check log files to ensure that the headers are formatted correctly. You should custom sed command to get unique gene identifiers.
+
