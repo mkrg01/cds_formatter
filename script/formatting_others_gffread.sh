@@ -9,7 +9,7 @@
 # Input genome: "other_downloaded/Aegilops_speltoides_Y2032/Y2032.updata.genome.fa" # ".fa" should be included
 
 # Please modify sed commands to curate cds header correctly
-custom_sed_command="-e s/.*gene=\([^;]*\).*/>\1/ -e s/.*locus_tag=\([^;]*\).*/>\1/ -e s/[[:space:]].*// -e s/\.[0-9][0-9]*$//"
+custom_sed_command="-e s/.*geneID=\([^;]*\).*/>\1/ -e s/.*gene=\([^;]*\).*/>\1/ -e s/.*locus_tag=\([^;]*\).*/>\1/ -e s/.*Name=\([^;]*\).*/>\1/ -e s/[[:space:]].*// -e s/%/_/g -e s/\.t[0-9][0-9]*$// -e s/\.mrna.*// -e s/\.mRNA.*// -e s/\.m[0-9][0-9]*$//" # -e s/-RA.*// -e s/\.[0-9][0-9]*$//
 
 date
 
@@ -51,7 +51,7 @@ for input_name in ${input_names[@]}; do
 		done
 
         gff_file=$(find "${dir_sp}" -maxdepth 1 -name "*.gff*" | head -n1)
-        genome_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" ! -iname "*cds*" | head -n1)
+        genome_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" ! -iname "*cds*" ! -iname "*codingseq*" ! -iname "*cdna*" | head -n1)
 
         dir_sp_out="${dir_formatted}/${sci_name_ub}_${accession}"
         if [[ ! -e ${dir_sp_out} ]]; then
@@ -61,7 +61,7 @@ for input_name in ${input_names[@]}; do
         if [[ ! -s ${dir_sp_out}/${sci_name_ub}_${accession}.cds.fa.gz ]]; then
             echo Formatting CDS file...
             gunzip -c ${gff_file} > ${dir_sp}/tmp.gff
-            gunzip -c ${genome_file} > ${dir_sp}/tmp.genome.fa
+            gunzip -c ${genome_file} | sed -e "s/lcl\|//" > ${dir_sp}/tmp.genome.fa
             gffread -F -C -g ${dir_sp}/tmp.genome.fa -x ${dir_sp}/tmp.cds.fa ${dir_sp}/tmp.gff
             if [[ -e ${dir_sp}/tmp.genome.fa.fai ]]; then
                 rm ${dir_sp}/tmp.genome.fa.fai
@@ -69,7 +69,7 @@ for input_name in ${input_names[@]}; do
             first_header=$(cat ${dir_sp}/tmp.cds.fa | head -n1)
             echo Gffread CDS full header: ${first_header}
             if [[ "$first_header" != *"gene="* && "$first_header" != *"locus_tag="* ]]; then
-                echo "Warning: header does not contain 'gene=' or 'locus_tag=': $file" | tee >(cat >&2)
+                echo "Warning: header does not contain 'gene=' or 'locus_tag='" | tee >(cat >&2)
             fi
             seqkit seq --threads ${NSLOTS} ${dir_sp}/tmp.cds.fa \
             | sed $custom_sed_command -e "s/^>/>${sci_name_ub}_/" \
@@ -82,7 +82,7 @@ for input_name in ${input_names[@]}; do
             rm ${dir_sp}/tmp.genome.fa
         fi
         # Copy gff
-        if [[ ! -s ${dir_sp_out}/${sci_name_ub}_${accession}.gff.gz ]]; then
+        if [[ ! -s ${dir_sp_out}/${sci_name_ub}_${accession}.gff.gz && -f ${gff_file} ]]; then
             echo Copying: ${gff_file}
             cp ${gff_file} ${dir_sp_out}/${sci_name_ub}_${accession}.gff.gz
         fi

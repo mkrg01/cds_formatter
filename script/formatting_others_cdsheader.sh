@@ -7,7 +7,7 @@
 # Input cds: "other_downloaded/Chrysanthemum_morifolium_v2/Cmo.cds.fa.gz" # ".fa" should be included
 
 # Please modify sed commands to curate cds header correctly
-custom_sed_command="-e s/.*gene=\([^;]*\).*/>\1/ -e s/.*locus_tag=\([^;]*\).*/>\1/ -e s/[[:space:]].*// -e s/\.[0-9][0-9]*$//"
+custom_sed_command="-e s/.*gene:\([^[:space:]]*\).*/>\1/" # -e s/\.[0-9][0-9]*$// -e s/.*gene=\([^;]*\).*/>\1/ -e s/.*locus_tag=\([^;]*\).*/>\1/ -e s/.*locus=\([^;]*\).*/>\1/ -e s/[[:space:]].*//
 
 date
 
@@ -48,7 +48,7 @@ for input_name in ${input_names[@]}; do
 			fi
 		done
 
-        cds_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" ! -name "*genome.fa*" | head -n1)
+        cds_file=$(find "${dir_sp}" -maxdepth 1 -name "*.fa*" \( -iname "*cds*" -o -iname "*codingseq*" -o -iname "*cdna*" \) | head -n1)
 
         dir_sp_out="${dir_formatted}/${sci_name_ub}_${accession}"
         if [[ ! -e ${dir_sp_out} ]]; then
@@ -60,10 +60,10 @@ for input_name in ${input_names[@]}; do
             first_header=$(gzcat ${cds_file} | head -n1)
             echo Original CDS header: ${first_header}
             if [[ "$first_header" != *"gene="* && "$first_header" != *"locus_tag="* ]]; then
-                echo "Warning: header does not contain 'gene=' or 'locus_tag=': $file" | tee >(cat >&2)
+                echo "Warning: header does not contain 'gene=' or 'locus_tag=': ${cds_file}" | tee >(cat >&2)
             fi
             seqkit seq --threads ${NSLOTS} ${cds_file} \
-            | sed $custom_sed_command -e "s/^>/>${sci_name_ub}_/" \
+            | sed ${custom_sed_command} -e "s/^>/>${sci_name_ub}_/" \
             | cdskit aggregate --expression ":.*" \
             | cdskit pad \
             | seqkit seq --threads ${NSLOTS} --out-file ${dir_sp_out}/${sci_name_ub}_${accession}.cds.fa.gz
