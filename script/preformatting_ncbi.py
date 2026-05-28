@@ -40,6 +40,7 @@ for idx, row in metadata_df.iterrows():
     species = format_species_name(row['Organism Scientific Name'])
     accession = row['Assembly Accession']
     assembly = row['Assembly Name'].replace(' ', '_')
+    assembly = re.sub(r'_+', '_', assembly)
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
     file_cds = dir_accession / "cds_from_genomic.fna"
     file_gff = dir_accession / "genomic.gff"
@@ -54,6 +55,7 @@ for idx, row in metadata_df.iterrows():
     species = format_species_name(row['Organism Scientific Name'])
     accession = row['Assembly Accession']
     assembly = row['Assembly Name'].replace(' ', '_')
+    assembly = re.sub(r'_+', '_', assembly)
     dir_accession = Path(dir_input / 'ncbi_dataset' / 'data' / accession)
     file_cds = dir_accession / "cds_from_genomic.fna"
     file_gff = dir_accession / "genomic.gff"
