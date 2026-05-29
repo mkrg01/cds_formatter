@@ -52,8 +52,12 @@ for input_name in ${input_names[@]}; do
 		files=( `ls ${dir_sp}` )
 		for file in ${files[@]}; do
 			if [[ ${file} == ${sci_name_ub}* && ${file} != *.gz ]]; then
-				echo Gzipping: ${file}
-				pigz --processes ${NSLOTS} ${dir_sp}/${file}
+				if [[ -e ${dir_sp}/${file}.gz ]]; then
+					echo "Gzipping skipped: ${file}.gz already exists"
+				else
+					echo Gzipping: ${file}
+					pigz --processes ${NSLOTS} ${dir_sp}/${file}
+				fi
 			fi
 		done
 		files=( `ls ${dir_sp}` )
